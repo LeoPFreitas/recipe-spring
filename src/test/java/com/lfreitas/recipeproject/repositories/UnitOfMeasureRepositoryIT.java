@@ -28,8 +28,8 @@ class UnitOfMeasureRepositoryIT {
 
     @Test
     void findByUnit() {
-        Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository.findByUnit("Tablespoon");
+        Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
 
-        assertEquals("Tablespoon", unitOfMeasureOptional.get().getUnit());
+        assertEquals("Tablespoon", unitOfMeasureOptional.get().getDescription());
     }
 }
