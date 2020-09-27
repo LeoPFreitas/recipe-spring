@@ -1,15 +1,14 @@
 package com.lfreitas.recipeproject.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @EqualsAndHashCode(exclude = {"recipe"})
 @ToString(exclude = "recipe")
-@Data
+@Getter
+@Setter
 public class Notes {
 
     @Id

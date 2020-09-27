@@ -1,6 +1,8 @@
 package com.lfreitas.recipeproject.controllers;
 
 import com.lfreitas.recipeproject.commands.IngredientCommand;
+import com.lfreitas.recipeproject.commands.RecipeCommand;
+import com.lfreitas.recipeproject.commands.UnitOfMeasureCommand;
 import com.lfreitas.recipeproject.services.IngredientService;
 import com.lfreitas.recipeproject.services.RecipeService;
 import com.lfreitas.recipeproject.services.UnitOfMeasureService;
@@ -62,5 +64,26 @@ public class IngredientController {
         log.debug("saved ingredient id:" + savedCommand.getId());
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newRecipe(@PathVariable String recipeId, Model model){
+
+        //make sure we have a good id value
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        //todo raise exception if null
+
+        //need to return back parent id for hidden form property
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        //init uom
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+
+        model.addAttribute("uomList",  unitOfMeasureService.listAllUoms());
+
+        return "recipe/ingredient/ingredientform";
     }
 }
