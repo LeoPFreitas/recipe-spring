@@ -3,9 +3,15 @@ package com.lfreitas.recipeproject.controllers;
 import com.lfreitas.recipeproject.commands.RecipeCommand;
 import com.lfreitas.recipeproject.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 @Slf4j
 @Controller
@@ -29,13 +35,13 @@ public class RecipeController {
     public String newRecipe(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
-        return "recipe/recipeForm";
+        return "recipe/recipeform";
     }
 
     @GetMapping("recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model){
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
-        return  "recipe/recipeForm";
+        return "recipe/recipeform";
     }
 
     @PostMapping("recipe")
@@ -53,6 +59,4 @@ public class RecipeController {
         recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
     }
-
-
 }
