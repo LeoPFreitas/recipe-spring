@@ -2,6 +2,7 @@ package com.lfreitas.recipeproject.controllers;
 
 import com.lfreitas.recipeproject.commands.RecipeCommand;
 import com.lfreitas.recipeproject.domain.Recipe;
+import com.lfreitas.recipeproject.exceptions.NotFoundException;
 import com.lfreitas.recipeproject.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -96,5 +97,16 @@ public class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
 
         verify(recipeService, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void testRipeNotFound() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 }

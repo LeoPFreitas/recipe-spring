@@ -7,8 +7,10 @@ import com.lfreitas.recipeproject.converters.UnitOfMeasureCommandToUnitOfMeasure
 import com.lfreitas.recipeproject.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.lfreitas.recipeproject.domain.Ingredient;
 import com.lfreitas.recipeproject.domain.Recipe;
+import com.lfreitas.recipeproject.exceptions.NotFoundException;
 import com.lfreitas.recipeproject.repositories.RecipeRepository;
 import com.lfreitas.recipeproject.repositories.UnitOfMeasureRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

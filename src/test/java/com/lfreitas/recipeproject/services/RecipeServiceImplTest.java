@@ -3,7 +3,9 @@ package com.lfreitas.recipeproject.services;
 import com.lfreitas.recipeproject.converters.RecipeCommandToRecipe;
 import com.lfreitas.recipeproject.converters.RecipeToRecipeCommand;
 import com.lfreitas.recipeproject.domain.Recipe;
+import com.lfreitas.recipeproject.exceptions.NotFoundException;
 import com.lfreitas.recipeproject.repositories.RecipeRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -49,6 +51,15 @@ class RecipeServiceImplTest {
         assertNotNull(recipeReturned);
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test()
+    public void getRecipeByIdTestNotFound() {
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            Optional<Recipe> recipeOptional = Optional.empty();
+            when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+            Recipe recipe = recipeService.findById(1L);
+        });
     }
 
     @Test
